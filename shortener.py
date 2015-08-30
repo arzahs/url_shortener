@@ -1,7 +1,6 @@
 from flask import Flask, render_template, redirect, request
+from data import get_url, add_url
 app = Flask(__name__)
-
-urls = []
 
 @app.route('/')
 def start():
@@ -11,7 +10,7 @@ def start():
 def new_url():
 	long_url = request.form['long_url'];
 	short_url = request.form['short_url']
-	urls.append(
+	add_url(
 		{
 		'Long': long_url,
 		'Short': short_url
@@ -21,9 +20,8 @@ def new_url():
 
 @app.route('/<short_url>')
 def go(short_url):
-	for url in urls:
-		if url.get('Short') == short_url:
-			return redirect(str(url.get('Long')))
+	url = get_url(short_url)
+	return redirect(url)
 
 if __name__ == '__main__':
     app.run(debug=True)
