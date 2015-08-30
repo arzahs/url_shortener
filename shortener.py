@@ -7,8 +7,8 @@ def start():
 
 @app.route('/new_url', methods=["POST"])
 def new_url():
-	url = request.form[''];
-	return render_template('new_url.html')
+	url = request.form['url'];
+	return render_template('new_url.html', url=url)
 
 
 if __name__ == '__main__':
